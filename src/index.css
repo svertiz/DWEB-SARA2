@@ -4,8 +4,8 @@
   --altura-cabecera: 76px;
   --altura-pie: 72px;
   font-family: system-ui, sans-serif;
-  color: #192c27;
-  background-color: #f5f3eb;
+  color: black;
+  background-color: pink;
   line-height: 1.7;
 }
 
@@ -36,7 +36,7 @@ body { margin: 0; }
   align-items: center;
   gap: 12px;
   padding: 16px 20px;
-  background-color: #215b45;
+  background-color: black;
   color: #fff;
 }
 

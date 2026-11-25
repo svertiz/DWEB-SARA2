@@ -46,8 +46,19 @@ export function sumarPrecios(precios) {
 export function duracion(inicio, fin) {
   inicio = Number(inicio);
   fin = Number(fin);
+
+  if (inicio < 0){
+    return 'El inicio debe ser mayor o igual a 0';
+  }
+  if (inicio > fin){
+    return 'El inicio debe ser menor al final';
+  }
+  if (fin > 1440){
+    return 'El final debe ser menor o igual a 1440';
+  }
   // TODO: resta inicio a fin.
-  return undefined;
+  let total = fin - inicio;
+  return total;
 }
 
 // 2. Devuelve un booleano: ambos enteros y 0 <= inicio < fin <= 1440.
@@ -56,7 +67,11 @@ export function horarioValido(inicio, fin) {
   inicio = Number(inicio);
   fin = Number(fin);
   // TODO: combina Number.isInteger y comparaciones con &&.
-  return undefined;
+  if (Number.isInteger(inicio) && Number.isInteger(fin) && inicio >= 0 && inicio < fin && fin <= 1440){
+    return true;
+  } else {
+    return false;
+  }
 }
 
 // 3. Recibe un array de géneros y el texto buscado. Cuenta coincidencias exactas.
@@ -64,7 +79,13 @@ export function horarioValido(inicio, fin) {
 // contarPorGenero([], 'indie') → 0. Debe funcionar con cualquier longitud.
 export function contarPorGenero(generos, buscado) {
   // TODO: empieza un contador en 0, recorre generos con for y compara cada valor.
-  return undefined;
+  let c = 0;
+  for (let i = 0; i < generos.length; i++){
+    if (generos[i] === buscado){
+        c++;
+    }
+  }
+  return c;
 }
 
 // 4. Recibe un array de duraciones no negativas, en minutos, como textos.
@@ -72,8 +93,14 @@ export function contarPorGenero(generos, buscado) {
 // Debe funcionar con cualquier longitud y sin modificar el array recibido.
 export function minutosTotales(duraciones) {
   // TODO: empieza un acumulador en 0 y recorre duraciones con for.
+    let suma = 0;
+  for (let i = 0; i <= duraciones.length; i++){
+    if (duraciones[i] >= 0 && duraciones[i]){
+        suma += Number(duraciones[i]);
+    }
+  }
   // Convierte cada valor con Number(duraciones[i]) antes de sumarlo.
-  return undefined;
+  return suma;
 }
 
 // 5. Dos textos: nombre de artista y consulta.
@@ -81,28 +108,45 @@ export function minutosTotales(duraciones) {
 // coincideTexto('Bruma Solar', ' BRUMA ') → true.
 export function coincideTexto(artista, texto) {
   // TODO: usa trim(), toLowerCase() e includes(). Devuelve un booleano.
-  return undefined;
+  let artistaSinExcepciones = artista.trim().toLowerCase();
+  let textoSinExcepciones = texto.trim().toLowerCase();
+  return artistaSinExcepciones.includes(textoSinExcepciones);
 }
 
 // 6. Dos códigos de escenario. Devuelve un booleano.
 // coincideEscenario('rio', 'rio') → true; ('rio', 'bosque') → false.
 export function coincideEscenario(escenario, buscado) {
   // TODO: compara los parámetros con igualdad estricta (===).
-  return undefined;
+  return escenario === buscado;
 }
 
 // 7. Convertir minutos a hora.
 // Convierte minutos enteros entre 0 y 1440 al formato HH:MM. Casos: 635 → 10:35; 0 → 00:00; 1440 → 24:00. Para valores inválidos devuelve 'Dato no válido'.
 export function hora(minutos) {
   // TODO: Usa Number, Number.isInteger, Math.floor, el resto (%) y padStart.
-  return undefined;
+    let minNum = Number(minutos);
+    if (!Number.isInteger(minNum) || minutos < 0 || minutos > 1440){
+        return "Dato no válido";
+    } else {
+        const horas = Math.floor(minNum / 60);
+        const minsRestantes = minNum % 60;
+
+        const horasFormateadas = String(horas).padStart(2, '0');
+        const minsFormateados = String(minsRestantes).padStart(2, '0');
+        return horasFormateadas + ":" + minsFormateados;
+    }
 }
 
 // 8. Aplicar un descuento.
 // Devuelve el precio final como número con un máximo de dos decimales. Precio no negativo y porcentaje entre 0 y 100, ambos finitos. Rechaza campos vacíos. Casos: 20 y 15 → 17; 19.99 y 10 → 17.99; -1 o 120 % → 'Dato no válido'.
 export function aplicarDescuento(precio, porcentaje) {
   // TODO: Valida antes de operar. toFixed devuelve texto; convierte de nuevo con Number.
-  return undefined;
+  if (precio >= 0 && porcentaje >= 0 && porcentaje <= 100 && !precio.empty() && !porcentaje.empty()){
+    let precioFinal = Number(precio) * (porcentaje/100);
+    return Number(precioFinal.toFixed());
+  } else {
+    return "Datos inválidos";
+  }
 }
 
 // 9. Encontrar la mayor duración.
